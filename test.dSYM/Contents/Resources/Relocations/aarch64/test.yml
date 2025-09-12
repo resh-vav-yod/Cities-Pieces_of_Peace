@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/resh_vav_yod/Github/Cities-Pieces_of_Peace/test'
+relocations:     []
+...
