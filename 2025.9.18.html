@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulster University Life & Health Sciences</title>
+    <style>
+        :root {
+            --primary: #1E88E5;
+            --secondary: #43A047;
+            --text: #333;
+            --bg: #f9f9f9;
+            --card-bg: #fff;
+            --border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .info-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .card ul {
+            list-style-type: none;
+        }
+
+        .card li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .card li::before {
+            content: "•";
+            color: var(--secondary);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+        }
+
+        .accessibility-note {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: rgba(30, 136, 229, 0.1);
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ulster University - Faculty of Life & Health Sciences</h1>
+            <p class="intro">A leading institution in health education and research, with exceptional rankings and student outcomes.</p>
+        </header>
+
+        <div class="info-cards">
+            <div class="card">
+                <h2>Academic Excellence</h2>
+                <ul>
+                    <li>Ranked in UK's top 6 universities for Nursing and world's top 41.</li>
+                    <li>Longest established School of Health Sciences in the UK.</li>
+                    <li>Ranked in the top 3 UK universities for Optometry.</li>
+                    <li>Largest School of Psychology on the island of Ireland.</li>
+                    <li>One of top 5 UK universities for Nursing and Biomedical Science Research.</li>
+                    <li>Top UK University for studying Pharmacy, and ranked in top 6 for Biosciences.</li>
+                    <li>Ranked in the world’s top 200 universities for Geography.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Student Satisfaction & Outcomes</h2>
+                <ul>
+                    <li>Highest performance in the National Student Survey with >90% satisfaction rating.</li>
+                    <li>90.6% of graduates find employment or pursue further study within 6 months of graduation.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accessibility-note">
+            <h3>Accessibility Considerations</h3>
+            <p>This page uses semantic HTML, proper color contrast, and keyboard navigable elements to ensure accessibility for all user
