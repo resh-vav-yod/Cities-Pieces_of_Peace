@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/mirrorLearn.unity
+    guid: 25ceebef7325f45d48a004a5bb061e14
   m_configObjects: {}
