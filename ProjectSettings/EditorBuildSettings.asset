@@ -6,15 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/EarthTest.unity
+    guid: 40e2624b54cb04d72a07f4e21cb7b06e
+  - enabled: 0
     path: Assets/Scenes/Menu.unity
     guid: c247fa27a599943d3955981f1fb73242
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameList.unity
     guid: 1d32ee19e910d44ed81b9019cb2989e6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/mirrorLearn.unity
     guid: 25ceebef7325f45d48a004a5bb061e14
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MyOtherScene.unity
     guid: a33303f9794fb4592a84c2151fefb205
   - enabled: 0
