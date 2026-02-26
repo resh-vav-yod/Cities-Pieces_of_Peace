@@ -1,0 +1,17 @@
+# 阻止 AI 读取 Unity 自动生成且必须提交的元数据
+*.meta
+
+# 阻止 AI 读取体积庞大的美术/音效等二进制资产
+*.png
+*.jpg
+*.fbx
+*.wav
+*.mp3
+*.mat
+*.anim
+*.prefab
+*.asset
+
+# 阻止 AI 读取第三方海量源码（比如你买的寻路插件或 Mirror 网络库）
+Assets/Plugins/
+Assets/Mirror/
