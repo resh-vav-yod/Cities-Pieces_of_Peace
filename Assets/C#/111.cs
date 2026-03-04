@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class s111 : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log("hello AI");
-    }
+     // Start is called before the first frame update
+     void Start()
+     {
+         Debug.Log("hello deepseek-coder:6.7b");
+     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+     // Update is called once per frame
+     void Update()
+     {
+         
+     }
 }
