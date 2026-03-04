@@ -7,7 +7,7 @@ public class s111 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("hello world");
+        Debug.Log("hello AI");
     }
 
     // Update is called once per frame
