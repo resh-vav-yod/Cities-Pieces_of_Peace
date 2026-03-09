@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EarthTest.unity
     guid: 40e2624b54cb04d72a07f4e21cb7b06e
+  - enabled: 1
+    path: Assets/Scenes/RTS_Battle.unity
+    guid: 69afdddfb12a74e449b49a8fb6b88c45
   - enabled: 0
     path: Assets/Scenes/Menu.unity
     guid: c247fa27a599943d3955981f1fb73242
