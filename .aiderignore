@@ -1,0 +1,12 @@
+*.meta
+*.png
+*.jpg
+*.fbx
+*.wav
+*.mp3
+*.mat
+*.anim
+*.prefab
+*.asset
+Assets/Plugins/
+Assets/Mirror//
