@@ -32,6 +32,3 @@
 # 忽略崩溃堆栈
 sysinfo.txt
 *.stackdump
-
-.aider*
-!.aiderignore
