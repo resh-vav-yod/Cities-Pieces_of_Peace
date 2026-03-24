@@ -1,0 +1,570 @@
+{
+  "version": 1,
+  "projection": "equirectangular",
+  "width": 8192,
+  "height": 4096,
+  "idField": "cq_zone_number",
+  "nameField": "name",
+  "cells": [
+    {
+      "id": 34,
+      "name": "Cell_34",
+      "color": [
+        34,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 0,
+      "properties": {
+        "cq_zone_name": "Northeastern Zone of Africa",
+        "cq_zone_number": 34
+      }
+    },
+    {
+      "id": 37,
+      "name": "Cell_37",
+      "color": [
+        37,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 1,
+      "properties": {
+        "cq_zone_name": "Eastern Zone of Africa",
+        "cq_zone_number": 37
+      }
+    },
+    {
+      "id": 39,
+      "name": "Cell_39",
+      "color": [
+        39,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 2,
+      "properties": {
+        "cq_zone_name": "Madagascar Zone",
+        "cq_zone_number": 39
+      }
+    },
+    {
+      "id": 36,
+      "name": "Cell_36",
+      "color": [
+        36,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 3,
+      "properties": {
+        "cq_zone_name": "Equatorial Zone of Africa",
+        "cq_zone_number": 36
+      }
+    },
+    {
+      "id": 35,
+      "name": "Cell_35",
+      "color": [
+        35,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 4,
+      "properties": {
+        "cq_zone_name": "Central Zone of Africa",
+        "cq_zone_number": 35
+      }
+    },
+    {
+      "id": 33,
+      "name": "Cell_33",
+      "color": [
+        33,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 5,
+      "properties": {
+        "cq_zone_name": "Northwestern Zone of Africa",
+        "cq_zone_number": 33
+      }
+    },
+    {
+      "id": 32,
+      "name": "Cell_32",
+      "color": [
+        32,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 6,
+      "properties": {
+        "cq_zone_name": "New Zealand Zone",
+        "cq_zone_number": 32
+      }
+    },
+    {
+      "id": 31,
+      "name": "Cell_31",
+      "color": [
+        31,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 7,
+      "properties": {
+        "cq_zone_name": "Central Pacific Zone",
+        "cq_zone_number": 31
+      }
+    },
+    {
+      "id": 30,
+      "name": "Cell_30",
+      "color": [
+        30,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 8,
+      "properties": {
+        "cq_zone_name": "Eastern Zone of Australia",
+        "cq_zone_number": 30
+      }
+    },
+    {
+      "id": 29,
+      "name": "Cell_29",
+      "color": [
+        29,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 9,
+      "properties": {
+        "cq_zone_name": "Western Zone of Australia",
+        "cq_zone_number": 29
+      }
+    },
+    {
+      "id": 28,
+      "name": "Cell_28",
+      "color": [
+        28,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 10,
+      "properties": {
+        "cq_zone_name": "Indonesian Zone",
+        "cq_zone_number": 28
+      }
+    },
+    {
+      "id": 27,
+      "name": "Cell_27",
+      "color": [
+        27,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 11,
+      "properties": {
+        "cq_zone_name": "Philippine Zone",
+        "cq_zone_number": 27
+      }
+    },
+    {
+      "id": 26,
+      "name": "Cell_26",
+      "color": [
+        26,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 12,
+      "properties": {
+        "cq_zone_name": "Southeastern Zone of Asia",
+        "cq_zone_number": 26
+      }
+    },
+    {
+      "id": 25,
+      "name": "Cell_25",
+      "color": [
+        25,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 13,
+      "properties": {
+        "cq_zone_name": "Japanese Zone",
+        "cq_zone_number": 25
+      }
+    },
+    {
+      "id": 38,
+      "name": "Cell_38",
+      "color": [
+        38,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 14,
+      "properties": {
+        "cq_zone_name": "South African Zone",
+        "cq_zone_number": 38
+      }
+    },
+    {
+      "id": 24,
+      "name": "Cell_24",
+      "color": [
+        24,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 15,
+      "properties": {
+        "cq_zone_name": "Eastern Zone of Asia",
+        "cq_zone_number": 24
+      }
+    },
+    {
+      "id": 23,
+      "name": "Cell_23",
+      "color": [
+        23,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 16,
+      "properties": {
+        "cq_zone_name": "Central Zone of Asia",
+        "cq_zone_number": 23
+      }
+    },
+    {
+      "id": 22,
+      "name": "Cell_22",
+      "color": [
+        22,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 17,
+      "properties": {
+        "cq_zone_name": "Southern Zone of Asia",
+        "cq_zone_number": 22
+      }
+    },
+    {
+      "id": 21,
+      "name": "Cell_21",
+      "color": [
+        21,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 18,
+      "properties": {
+        "cq_zone_name": "Southwestern Zone of Asia",
+        "cq_zone_number": 21
+      }
+    },
+    {
+      "id": 20,
+      "name": "Cell_20",
+      "color": [
+        20,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 19,
+      "properties": {
+        "cq_zone_name": "Balkan Zone",
+        "cq_zone_number": 20
+      }
+    },
+    {
+      "id": 19,
+      "name": "Cell_19",
+      "color": [
+        19,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 20,
+      "properties": {
+        "cq_zone_name": "Eastern Siberian Zone",
+        "cq_zone_number": 19
+      }
+    },
+    {
+      "id": 18,
+      "name": "Cell_18",
+      "color": [
+        18,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 21,
+      "properties": {
+        "cq_zone_name": "Central Siberian Zone",
+        "cq_zone_number": 18
+      }
+    },
+    {
+      "id": 17,
+      "name": "Cell_17",
+      "color": [
+        17,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 22,
+      "properties": {
+        "cq_zone_name": "Western Zone of Siberia",
+        "cq_zone_number": 17
+      }
+    },
+    {
+      "id": 16,
+      "name": "Cell_16",
+      "color": [
+        16,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 23,
+      "properties": {
+        "cq_zone_name": "Eastern Zone of Europe",
+        "cq_zone_number": 16
+      }
+    },
+    {
+      "id": 15,
+      "name": "Cell_15",
+      "color": [
+        15,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 24,
+      "properties": {
+        "cq_zone_name": "Central European Zone",
+        "cq_zone_number": 15
+      }
+    },
+    {
+      "id": 14,
+      "name": "Cell_14",
+      "color": [
+        14,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 25,
+      "properties": {
+        "cq_zone_name": "Western Zone of Europe",
+        "cq_zone_number": 14
+      }
+    },
+    {
+      "id": 13,
+      "name": "Cell_13",
+      "color": [
+        13,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 26,
+      "properties": {
+        "cq_zone_name": "Southeast Zone of South America",
+        "cq_zone_number": 13
+      }
+    },
+    {
+      "id": 12,
+      "name": "Cell_12",
+      "color": [
+        12,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 27,
+      "properties": {
+        "cq_zone_name": "Southwest Zone of South America",
+        "cq_zone_number": 12
+      }
+    },
+    {
+      "id": 11,
+      "name": "Cell_11",
+      "color": [
+        11,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 28,
+      "properties": {
+        "cq_zone_name": "Central Zone of South America",
+        "cq_zone_number": 11
+      }
+    },
+    {
+      "id": 10,
+      "name": "Cell_10",
+      "color": [
+        10,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 29,
+      "properties": {
+        "cq_zone_name": "Western Zone of South America",
+        "cq_zone_number": 10
+      }
+    },
+    {
+      "id": 9,
+      "name": "Cell_9",
+      "color": [
+        9,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 30,
+      "properties": {
+        "cq_zone_name": "Northern Zone of South America",
+        "cq_zone_number": 9
+      }
+    },
+    {
+      "id": 8,
+      "name": "Cell_8",
+      "color": [
+        8,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 31,
+      "properties": {
+        "cq_zone_name": "West Indies Zone",
+        "cq_zone_number": 8
+      }
+    },
+    {
+      "id": 7,
+      "name": "Cell_7",
+      "color": [
+        7,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 32,
+      "properties": {
+        "cq_zone_name": "Central American Zone",
+        "cq_zone_number": 7
+      }
+    },
+    {
+      "id": 6,
+      "name": "Cell_6",
+      "color": [
+        6,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 33,
+      "properties": {
+        "cq_zone_name": "Southern Zone of North America",
+        "cq_zone_number": 6
+      }
+    },
+    {
+      "id": 5,
+      "name": "Cell_5",
+      "color": [
+        5,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 34,
+      "properties": {
+        "cq_zone_name": "Eastern Zone of North America",
+        "cq_zone_number": 5
+      }
+    },
+    {
+      "id": 4,
+      "name": "Cell_4",
+      "color": [
+        4,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 35,
+      "properties": {
+        "cq_zone_name": "Central Zone of North America",
+        "cq_zone_number": 4
+      }
+    },
+    {
+      "id": 3,
+      "name": "Cell_3",
+      "color": [
+        3,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 36,
+      "properties": {
+        "cq_zone_name": "Western Zone of North America",
+        "cq_zone_number": 3
+      }
+    },
+    {
+      "id": 2,
+      "name": "Cell_2",
+      "color": [
+        2,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 37,
+      "properties": {
+        "cq_zone_name": "Northeastern Zone of North America",
+        "cq_zone_number": 2
+      }
+    },
+    {
+      "id": 1,
+      "name": "Cell_1",
+      "color": [
+        1,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 38,
+      "properties": {
+        "cq_zone_name": "Northwestern Zone of North America",
+        "cq_zone_number": 1
+      }
+    },
+    {
+      "id": 40,
+      "name": "Cell_40",
+      "color": [
+        40,
+        0,
+        0
+      ],
+      "sourceFeatureIndex": 39,
+      "properties": {
+        "cq_zone_name": "North Atlantic Zone",
+        "cq_zone_number": 40
+      }
+    }
+  ]
+}
