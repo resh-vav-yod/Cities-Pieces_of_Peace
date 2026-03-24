@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "cells": [
+    {
+      "id": 1,
+      "displayName": "测试地区1",
+      "owner": "Neutral",
+      "terrain": "Plain",
+      "resources": {
+        "food": 100,
+        "wood": 50,
+        "iron": 20
+      },
+      "population": 3000,
+      "taxRate": 0.1,
+      "canBuild": true,
+      "tags": ["start"]
+    },
+    {
+      "id": 2,
+      "displayName": "测试地区2",
+      "owner": "PlayerA",
+      "terrain": "Mountain",
+      "resources": {
+        "food": 10,
+        "wood": 20,
+        "iron": 120
+      },
+      "population": 1000,
+      "taxRate": 0.05,
+      "canBuild": false,
+      "tags": ["mine"]
+    }
+  ]
+}
