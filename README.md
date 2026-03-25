@@ -1,8 +1,78 @@
-This is a readme.
+# 城：散装和平（Cities:Pieces of Peace）企划
 
-This repositories which is called Cities-Pieces_of_Peace is the game which is the series of City that is named of Cities:Pieces of Peace. /*城：散装和平*/
+## 目录{#0}
+###### 
+- **[开发](#1)**
+    - 环境
+    - 工具
+- **[定位](#2)**
+- **[设计](#3)**
+- **[技术](#4)**
+- **[进度](#5)**
 
-I think this game is a RTS.
-It`s mix hoi4,Ck3.
+## 开发{#1}
+引擎：Unity
+版本：`2022.3.62f3`[^1]
+管线：UPR `Universal Render Pipeline`
+###### [*回到目录*](#0)
 
-I wanna do this game because.
+
+## 定位{#2}
+> RTS + 4X + SLG（？）
+###### [*回到目录*](#0)
+
+
+## 设计{#3}
+游戏流程：根据时间/发展渐进`放大视野`和`关闭权限`
+| 阶段 | 视野 | 权限 |
+| :---: | ---: | :--- |
+| 开局 | 首都 |  |
+| 前期 | 接壤地块 |  |
+| 中期 | 地球表面 |  |
+| 后期 | 地球 |  |
+| 结束 | 结算画面 |  |
+###### [*回到目录*](#0)
+
+
+## 技术{#4}
+1. 联机
+    1. 核心组件：Mirror
+    2. 脚本管理
+    3. 代码宏
+    4. 
+    5. 
+2. 文件架构
+在GitHub备份`Assets`、`Packages`、`ProjectSettings`文件夹。
+    ```tree
+    Assets/
+    ├── Art/
+    ├── Audio/
+    ├── Data/
+    ├── Mirror/
+    ├── Prefabs/
+    ├── Scenes/
+    ├── Scripts/
+    ├── ScriptTemplates/
+    ├── Settings/
+    ├── StreamingAssets/
+    ├── test/
+    ├── TextMesh Pro/
+    └── UI/
+    ```
+3. 
+4. 
+###### [*回到目录*](#0)
+
+
+## 进度{#5}
+- [x] 地球🌍
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 游戏编辑器
+###### [*回到目录*](#0)
+
+
+
+[^1]: 注意没有C
