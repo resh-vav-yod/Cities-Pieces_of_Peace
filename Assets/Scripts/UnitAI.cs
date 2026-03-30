@@ -4,6 +4,96 @@ using Mirror;
 
 public class UnitAI : NetworkBehaviour
 {
+    [SyncVar(hook = nameof(OnColorChanged))]
+    public Color teamColor;
+
+    private NavMeshAgent agent;
+    public float attackRange = 3f;
+    public float attackCooldown = 1f;
+    private float lastAttackTime;
+
+    void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    // 【核心修复】当小兵在客户端生成时，直接关掉它的大脑！
+    // 让它变成一个只听服务器发坐标的木偶，彻底杜绝发呆和乱跑！
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if (!isServer) 
+        {
+            agent.enabled = false; 
+        }
+    }
+
+    void OnColorChanged(Color oldC, Color newC)
+    {
+        GetComponent<MeshRenderer>().material.color = newC;
+    }
+
+    // 只有服务器会执行 Update 里的 AI 逻辑
+    [ServerCallback]
+    void Update()
+    {
+        // 确保服务器上的 Agent 是开启的
+        if (!agent.enabled) agent.enabled = true;
+
+        UnitAI target = FindClosestEnemy();
+
+        if (target != null)
+        {
+            float dist = Vector3.Distance(transform.position, target.transform.position);
+
+            if (dist <= attackRange)
+            {
+                agent.ResetPath(); // 停下脚步准备攻击
+                
+                if (Time.time - lastAttackTime > attackCooldown)
+                {
+                    lastAttackTime = Time.time;
+                    Debug.Log($"[{teamColor}] 的小兵击杀了敌人！");
+                    NetworkServer.Destroy(target.gameObject); 
+                }
+            }
+            else
+            {
+                // 距离不够，继续追击
+                agent.SetDestination(target.transform.position);
+            }
+        }
+    }
+
+    // 索敌逻辑不变
+    UnitAI FindClosestEnemy()
+    {
+        UnitAI[] allUnits = FindObjectsByType<UnitAI>(FindObjectsSortMode.None);
+        UnitAI closest = null;
+        float minDist = Mathf.Infinity;
+
+        foreach (var u in allUnits)
+        {
+            if (u == this || u.teamColor == this.teamColor) continue;
+
+            float d = Vector3.Distance(transform.position, u.transform.position);
+            if (d < minDist)
+            {
+                minDist = d;
+                closest = u;
+            }
+        }
+        return closest;
+    }
+}
+
+/*
+using UnityEngine;
+using UnityEngine.AI;
+using Mirror;
+
+public class UnitAI : NetworkBehaviour
+{
     [Header("阵营与组件")]
     [SyncVar(hook = nameof(OnColorChanged))]
     public Color teamColor;
@@ -80,3 +170,4 @@ public class UnitAI : NetworkBehaviour
         return closest;
     }
 }
+*/
