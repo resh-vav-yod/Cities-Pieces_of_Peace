@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI; // 必须引用 UI 命名空间
 using TMPro;
 using Mirror;         // 用于场景跳转
+using UnityEngine.EventSystems;
 
 public class PlanetRegionInteractor : MonoBehaviour
 {
@@ -39,6 +40,12 @@ public class PlanetRegionInteractor : MonoBehaviour
 
     private void Update()
     {
+        // 如果鼠标当前指在 UI 上 (比如按钮、面板)，直接退出，不再往后执行地球点击判定
+        if (EventSystem.current.IsPointerOverGameObject()) 
+        {
+            return; 
+        }
+        
         if (Input.GetMouseButtonDown(0))
         {
             TryPickRegion();
