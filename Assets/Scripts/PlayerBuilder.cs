@@ -18,7 +18,16 @@ public class PlayerBuilder : NetworkBehaviour
     private int currentGridX, currentGridY;
     private bool canPlaceCurrently;
 
-/*
+    [SyncVar] public Color myTeamColor;
+    private static int colorIndex = 0;
+    private static Color[] teamColors = { Color.blue, Color.red, Color.yellow, Color.green };
+
+    public override void OnStartServer()
+    {
+        myTeamColor = teamColors[colorIndex % teamColors.Length];
+        colorIndex++;
+    }
+
     void Update()
     {
         if (!isLocalPlayer) return; // 只控制本地玩家的操作
@@ -28,20 +37,19 @@ public class PlayerBuilder : NetworkBehaviour
         // 按 B 键开关建造模式 (你可以后续改成 UI 按钮触发)
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Debug.Log("检测到按下 B 键！当前 isBuildMode: " + !isBuildMode);
+            //Debug.Log("检测到按下 B 键！当前 isBuildMode: " + !isBuildMode);
             ToggleBuildMode(!isBuildMode);
         }
 
         if (isBuildMode)
         {
-            if (Camera.main == null) { Debug.LogWarning("找不到主摄像机！"); return; }
-            if (GridManager.Instance == null) { Debug.LogWarning("找不到 GridManager 实例！"); return; }
+            //if (Camera.main == null) { Debug.LogWarning("找不到主摄像机！"); return; }
+            //if (GridManager.Instance == null) { Debug.LogWarning("找不到 GridManager 实例！"); return; }
             HandlePreview();
             HandleClickToBuild();
         }
     }
-*/
-
+    /*
     void Update()
     {
         // 1. 权限检查
@@ -86,7 +94,7 @@ public class PlayerBuilder : NetworkBehaviour
             }
         }
     }
-    
+    */
     void ToggleBuildMode(bool state)
     {
         isBuildMode = state;
@@ -100,6 +108,7 @@ public class PlayerBuilder : NetworkBehaviour
             if (currentPreview != null) currentPreview.SetActive(false);
         }
     }
+
 
     void HandlePreview()
     {
@@ -145,8 +154,10 @@ public class PlayerBuilder : NetworkBehaviour
             Vector3 spawnPos = GridManager.Instance.GetWorldPosition(x, y);
             GameObject newBuilding = Instantiate(actualBuildingPrefab, spawnPos, Quaternion.identity);
             
-            // 3. 通过 Mirror 广播给所有客户端
-            NetworkServer.Spawn(newBuilding);
+            // 把生成建筑的控制权(Authority)赋给点击建造的玩家客户端！
+            NetworkServer.Spawn(newBuilding, connectionToClient);
+
+            newBuilding.GetComponent<BuildingControl>().teamColor = this.myTeamColor;
         }
     }
 }
