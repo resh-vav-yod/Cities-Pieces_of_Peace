@@ -1,7 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI; // 必须引用 UI 命名空间
+using TMPro;
+using Mirror;         // 用于场景跳转
 
 public class PlanetRegionInteractor : MonoBehaviour
 {
+    [Header("UI 联动")]
+    public GameObject regionInfoPanel; // 拖入你的右侧弹窗面板
+    public TextMeshProUGUI nameText;             
+    public TextMeshProUGUI ownerText;            
+    public TextMeshProUGUI resourceText;
+    
     [Header("核心引用")]
     public Camera mainCam;
     public Collider planetCollider;
@@ -34,6 +43,21 @@ public class PlanetRegionInteractor : MonoBehaviour
         {
             TryPickRegion();
         }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ClosePanel();
+        }
+    }
+
+    public void ClosePanel()
+    {
+        if (regionInfoPanel != null && regionInfoPanel.activeSelf)
+        {
+            regionInfoPanel.SetActive(false); // 关闭面板
+            ClearHighlight();                // 清除地球上的高亮
+            Debug.Log("通过 ESC 关闭了信息面板");
+        }
     }
 
     void TryPickRegion()
@@ -63,6 +87,43 @@ public class PlanetRegionInteractor : MonoBehaviour
 
         Debug.Log($"点击 UV: {uv}, cellId: {cellId}");
 
+        // ... 之前的采样和解码代码保持不变 ...
+
+        if (cellId == 0)
+        {
+            ClearHighlight();
+            regionInfoPanel.SetActive(false); // 点到海洋时关闭面板
+            return;
+        }
+
+        database.TryGetCell(cellId, out GeneratedCellInfo gen, out CellValueInfo val);
+
+        // 1. 确定名称
+        string nameResult = val != null && !string.IsNullOrEmpty(val.displayName)
+            ? val.displayName
+            : (gen != null ? gen.name : "Unknown Region");
+
+        // 2. 确定归属
+        string ownerResult = val != null ? val.owner : "None";
+
+        // 3. 联动 UI 显示 [新增逻辑]
+        if (regionInfoPanel != null)
+        {
+            nameText.text = nameResult;
+            ownerText.text = "Owner: " + ownerResult;
+            
+            // 如果有详细资源数据，显示资源
+            if (val != null && val.resources != null)
+            {
+                resourceText.text = $"food: {val.resources.food} | wood: {val.resources.wood} | iron: {val.resources.iron}";
+            }
+            
+            regionInfoPanel.SetActive(true); // 激活面板
+        }
+
+        ApplyHighlight(pickedColor);
+
+        /*
         if (cellId == 0)
         {
             ClearHighlight();
@@ -81,6 +142,7 @@ public class PlanetRegionInteractor : MonoBehaviour
         Debug.Log($"成功选中地区：ID={cellId}，名称={nameText}，归属={ownerText}");
 
         ApplyHighlight(pickedColor);
+        */
     }
 
     void ApplyHighlight(Color32 pickedColor)
@@ -107,6 +169,15 @@ public class PlanetRegionInteractor : MonoBehaviour
     int DecodeId(Color32 c)
     {
         return c.r | (c.g << 8) | (c.b << 16);
+    }
+
+    public void JumpToBattleScene()
+    {
+        // 只有 Server/Host 才能发起场景切换
+        if (NetworkServer.active)
+        {
+            NetworkManager.singleton.ServerChangeScene("test-battle");
+        }
     }
 }
 /*

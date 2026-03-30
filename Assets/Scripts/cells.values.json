@@ -3,7 +3,7 @@
   "cells": [
     {
       "id": 1,
-      "displayName": "测试地区1",
+      "displayName": "testzone1",
       "owner": "Neutral",
       "terrain": "Plain",
       "resources": {
@@ -18,7 +18,7 @@
     },
     {
       "id": 2,
-      "displayName": "测试地区2",
+      "displayName": "testzone2",
       "owner": "PlayerA",
       "terrain": "Mountain",
       "resources": {
