@@ -1,5 +1,5 @@
 # 文件目录
-中文 | [English](./en/FolderMenu_en.md) | [日本語](./jp/FolderMenu_jp.md) | 
+中文 | [English](Docs/en/FolderMenu_en.md) | [日本語](Docs/jp/FolderMenu_jp.md) | 
 
 ---
 
@@ -110,24 +110,24 @@ Cities-Pieces_of_Peace/        #root
 ## 目录 <a id="0"></a>
 
 > [!TIP]
-> 为轻松熟悉文件结构，点击下方 `Drop!` 可观看文件结构示例。   
+> 为轻松熟悉文件结构，点击下方 `Drop!` 可观看文件夹分类示例。   
 
 <details>
 <summary><b>Drop!</b></summary>
 
-yijiwjj
-- 1
-  - 1
-    - 1
-      1. 1
-      2. 2
-- - - - -
+`Cities-Pieces_of_Peace/` **项目根目录**  
+**独立文件根目录**
+- 区分文件夹
+  - 类型文件夹
+    - 分类文件夹 *（数字编号仅出现在对应详细页面）*
+      1. 具体文件夹A
+      2. 具体文件夹B
 
 </details>
 
 [Docs](#1) 
-  - [](#) 
-  - 
+  - [Design](#11) 
+  - [ArtBook](#12) 
 
 [ExternalData](#2) 
   - [](#) 
@@ -170,6 +170,7 @@ yijiwjj
 ## UnityProject <a id="3"></a>
 
 ### Assets <a id="31"></a>
+
 #### Art <a id="311"></a>
 ##### Materials <a id="3111"></a>
 
