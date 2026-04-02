@@ -127,12 +127,23 @@ Cities-Pieces_of_Peace/        #root
 </details>
 
 [Docs](#1) 
-  - [Design](#11) 
-  - [ArtBook](#12) 
+  - [ArtBook](#11) 
+  - [Design](#12) 
+    - [GDD](#121) 
+    - [Tech](#122) 
+  - [Logs](#13) 
+    - [DevLog](#131) 
+    - [WorkLog](#132) 
 
 [ExternalData](#2) 
-  - [](#) 
-  - 
+  - [Map](#21) 
+    - [Source](#211) 
+    - [Generated](#212) 
+      - [id_map.png](#2121)
+      - [border_map.png](#2122)
+      - [cells.generated.json](#2123)
+    - [Gameplay](#213) 
+  - [Gameplay](#22) 
 
 [UnityProject](#3) 
   - [Assets](#31)
@@ -168,12 +179,43 @@ Cities-Pieces_of_Peace/        #root
 
 ---
 ## Docs <a id="1"></a>
-1 <a id="1"></a>
+
+### ArtBook <a id="11"></a>
+
+### Design <a id="12"></a>
+
+#### 1. GDD <a id="121"></a>
+##### 1.1  <a id="1211"></a>
+##### 1.2  <a id="1212"></a>
+##### 1.3  <a id="1213"></a>
+
+#### 2. Tech <a id="122"></a>
+##### 2.1  <a id="1221"></a>
+
+### Logs <a id="13"></a>
+
+#### 1. Devlog <a id="131"></a>
+
+#### 2. Worklog <a id="122"></a>
 
 ###### [*回到目录*](#0)
 
 ---
 ## ExternalData <a id="2"></a>
+
+### Map <a id="21"></a>
+
+#### 1. Source <a id="211"></a>
+##### 1.1  <a id="2111"></a>
+
+#### 2. Generated <a id="212"></a>
+##### 2.1 id_map.png <a id="2121"></a>
+##### 2.2 border_map.png <a id="2212"></a>
+##### 2.3 cells.generated.json <a id="2213"></a>
+
+#### 3. Gameplay <a id="213"></a>
+
+### Gameplay <a id="22"></a>
 
 ###### [*回到目录*](#0)
 
@@ -184,6 +226,12 @@ Cities-Pieces_of_Peace/        #root
 
 #### 1. Art <a id="311"></a>
 ##### 1.1 Materials <a id="3111"></a>
+##### 1.2 Models <a id="3112"></a>
+##### 1.3 Textures <a id="3113"></a>
+
+#### 2. Audio <a id="312"></a>
+##### 2.1 Music <a id="3121"></a>
+##### 2.2 Sound <a id="3122"></a>
 
 #### 3. Code <a id="313"></a>
 ##### 3.1 Editor <a id="3131"></a>
@@ -198,6 +246,16 @@ Cities-Pieces_of_Peace/        #root
 ###### 3.3.4 Share <a id="31334"></a>
 ##### 3.4 Shader <a id="3134"></a>
 ##### 3.5 Tests <a id="3135"></a>
+
+#### 4. Data <a id="314"></a>
+##### 4.1 Import <a id="3141"></a>
+
+#### 5. Level <a id="315"></a>
+##### 5.1 Prefabs <a id="3151"></a>
+##### 5.2 Scenes <a id="3152"></a>
+##### 5.3 UI <a id="3153"></a>
+
+#### 6. Other <a id="316"></a>
 
 ### Packages <a id="32"></a>
 
