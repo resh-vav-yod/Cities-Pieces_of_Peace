@@ -107,47 +107,76 @@ Cities-Pieces_of_Peace/        #root
 
 ---
 
-## 目录
-[Docs](#Docs) 
-  - [Assets](#) 
-  - 1
+## 目录 <a id="Menu"></a>
 
-[ExternalData](#2) 
-  - [Assets](#Assets) 
+> [!TIP]
+> 为轻松熟悉文件结构，点击下方 `Drop!` 可观看文件结构示例。   
+
+<details>
+<summary><b>Drop!</b></summary>
+
+yijiwjj
+- 1
+  - 1
+    - 1
+      1. 1
+      2. 2
+- - - - -
+
+</details>
+
+[Docs](#Docs) 
+  - [](#) 
   - 
 
-[UnityProject](#2) 
-  - [Assets](#Assets)
-    - [Art](#)
-    - [Audio](#)
-    - [Code](#)
-    - [Data](#)
-    - [Level](#)
-    - [Other](#)
+[ExternalData](#ExternalData) 
+  - [](#) 
+  - 
 
+[UnityProject](#UnityProject) 
+  - [Assets](#Assets)
+    - [Art](#Art)
+      - [Materials](#Materials) 
+      - [Models](#Models) 
+      - [Textures](#Textures) 
+    - [Audio](#Audio)
+      - [Music](#Music) 
+      - [Sound](#Sound) 
+    - [Code](#Code)
+      - [Shader](#Shader) 
+    - [Data](#Data)
+      - [Import](#Improt) 
+    - [Level](#Level)
+      - [Prefabs](#Prefabs) 
+      - [Scenes](#Scenes) 
+      - [UI](#UI) 
+    - [Other](#Other)
 
   - [Packages](#Packages)
   - [ProjectSettings](#ProjectSettings)
 
-+---[Docs](#Docs)  
-    +---  
-    | +---  
-+---[UnityProject](#2)  
-    +---[UnityProject](#)  
-    +---[UnityProject](#)  
-    \---[UnityProject](#)  
-
 ---
-
 ## Docs <a id="Docs"></a>
 
----
-
-## ExternalData <a id="Docs"></a>
+###### [*回到目录*](#Menu)
 
 ---
+## ExternalData <a id="ExternalData"></a>
 
-## UnityProject <a id="Docs"></a>
+###### [*回到目录*](#Menu)
+
+---
+## UnityProject <a id="UnityProject"></a>
+
+### Assets <a id="Assets"></a>
+#### Art <a id="Art"></a>
+##### Materials <a id="Materials"></a>
+
+### Packages <a id="Packages"></a>
+
+### ProjectSettings <a id="ProjectSettings"></a>
+
+###### [*回到目录*](#Menu)
 
 ---
 
