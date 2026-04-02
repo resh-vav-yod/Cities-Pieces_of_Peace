@@ -1,3 +1,54 @@
+# ====================================================================
+# Unity Project Subfolder (UnityProject/) 核心忽略规则
+# ====================================================================
+UnityProject/[Ll]ibrary/
+UnityProject/[Tt]emp/
+UnityProject/[Oo]bj/
+UnityProject/[Bb]uild/
+UnityProject/[Bb]uilds/
+UnityProject/[Ll]ogs/
+UnityProject/[Uu]ser[Ss]ettings/
+
+# 忽略 Unity 自动生成的临时文件
+UnityProject/MemoryCaptures/
+UnityProject/Recording/
+UnityProject/*.csproj
+UnityProject/*.unityproj
+UnityProject/*.sln
+UnityProject/*.suo
+UnityProject/*.tmp
+UnityProject/*.user
+UnityProject/*.userprefs
+UnityProject/*.pidb
+UnityProject/*.booproj
+UnityProject/*.svd
+UnityProject/*.pdb
+UnityProject/*.mdb
+UnityProject/*.opendb
+UnityProject/*.VC.db
+
+# ====================================================================
+# 外部工具与 IDE 忽略
+# ====================================================================
+.vs/
+.vscode/
+*.vsconfig
+bin/
+obj/
+
+# ====================================================================
+# 系统垃圾文件
+# ====================================================================
+.DS_Store
+Thumbs.db
+
+# ====================================================================
+# 崩溃堆栈与日志
+# ====================================================================
+sysinfo.txt
+*.stackdump
+crash_reporter.log
+
 # 核心忽略规则
 /[Ll]ibrary/
 /[Tt]emp/
