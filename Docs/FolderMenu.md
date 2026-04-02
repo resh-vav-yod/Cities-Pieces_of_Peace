@@ -1,16 +1,18 @@
+# 文件目录
 中文 | [English](./en/FolderMenu_en.md) | [日本語](./jp/FolderMenu_jp.md) | 
 
-# 文件目录
+---
 
 ## 总览
 > [!IMPORTANT]
-> 详细
+> *总览目录* 仅用于直观显示文件结构（精确到文件类型）。  
+> 不包含详细介绍和跳转链接，此部分参见下方 **目录** 章节。  
 
 > [!TIP]
-> 如需查看核心数据结构的定义协议，请参阅 `Docs/DataSchema.md` (建设中)。
+> 为保障阅读连贯性，故对 *总览目录* 进行折叠。点击下方 `Drop!` 展开目录。   
 
 <details>
-<summary><b>点我</b></summary>
+<summary><b>Drop!</b></summary>
   
 ```text
 Cities-Pieces_of_Peace/        #root
@@ -103,12 +105,29 @@ Cities-Pieces_of_Peace/        #root
 
 </details>
 
+---
+
 ## 目录
-Cities-Pieces_of_Peace 
-* [Docs](#Docs) 
+[Docs](#Docs) 
   - [Assets](#) 
-* [UnityProject](#2) 
-  - [Assets](#) 
+  - 1
+
+[ExternalData](#2) 
+  - [Assets](#Assets) 
+  - 
+
+[UnityProject](#2) 
+  - [Assets](#Assets)
+    - [Art](#)
+    - [Audio](#)
+    - [Code](#)
+    - [Data](#)
+    - [Level](#)
+    - [Other](#)
+
+
+  - [Packages](#Packages)
+  - [ProjectSettings](#ProjectSettings)
 
 +---[Docs](#Docs)  
     +---  
@@ -118,5 +137,19 @@ Cities-Pieces_of_Peace
     +---[UnityProject](#)  
     \---[UnityProject](#)  
 
-## 背景 <a id="Docs"></a>
+---
+
+## Docs <a id="Docs"></a>
+
+---
+
+## ExternalData <a id="Docs"></a>
+
+---
+
+## UnityProject <a id="Docs"></a>
+
+---
+
+##
 
