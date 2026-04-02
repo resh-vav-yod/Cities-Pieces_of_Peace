@@ -116,6 +116,7 @@ Cities-Pieces_of_Peace/        #root
 <summary><b>Drop!</b></summary>
 
 `Cities-Pieces_of_Peace/` **项目根目录**  
+
 **独立文件根目录**
 - 区分文件夹
   - 类型文件夹
@@ -134,26 +135,28 @@ Cities-Pieces_of_Peace/        #root
   - 
 
 [UnityProject](#3) 
-  - [Assets](#31)
-    - [Art](#311)
-      - [Materials](#3111) 
-      - [Models](#3112) 
-      - [Textures](#3113) 
-    - [Audio](#312)
-      - [Music](#3121) 
-      - [Sound](#3122) 
-    - [Code](#313)
-      - [Shader](#3131) 
-    - [Data](#314)
-      - [Import](#3141) 
-    - [Level](#315)
-      - [Prefabs](#3151) 
-      - [Scenes](#3152) 
-      - [UI](#3153) 
-    - [Other](#316)
-
-  - [Packages](#32)
-  - [ProjectSettings](#33)
+- [文件目录](#文件目录)
+  - [总览](#总览)
+  - [目录 ](#目录-)
+  - [Docs ](#docs-)
+          - [*回到目录*](#回到目录)
+  - [ExternalData ](#externaldata-)
+          - [*回到目录*](#回到目录-1)
+  - [UnityProject ](#unityproject-)
+    - [Assets ](#assets-)
+      - [Art ](#art-)
+        - [Materials ](#materials-)
+      - [Code ](#code-)
+        - [Editor ](#editor-)
+        - [PlayerEditor ](#playereditor-)
+        - [Scripts ](#scripts-)
+          - [](#)
+        - [Shader ](#shader-)
+        - [Tests ](#tests-)
+    - [Packages ](#packages-)
+    - [ProjectSettings ](#projectsettings-)
+          - [*回到目录*](#回到目录-2)
+  - [](#-1)
 
 ---
 ## Docs <a id="1"></a>
@@ -173,6 +176,14 @@ Cities-Pieces_of_Peace/        #root
 
 #### Art <a id="311"></a>
 ##### Materials <a id="3111"></a>
+
+#### Code <a id="313"></a>
+##### Editor <a id="3131"></a>
+##### PlayerEditor <a id="3132"></a>
+##### Scripts <a id="3133"></a>
+###### 
+##### Shader <a id="3134"></a>
+##### Tests <a id="3135"></a>
 
 ### Packages <a id="P32"></a>
 
