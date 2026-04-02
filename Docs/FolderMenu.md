@@ -1,5 +1,5 @@
 # 文件目录
-中文 | [English](Cities-Pieces_of_Peace/Docs/en/FolderMenu_en.md) | [日本語](Docs/jp/FolderMenu_jp.md) | 
+中文 | [English](./en/FolderMenu_en.md) | [日本語](./jp/FolderMenu_jp.md) | 
 
 ---
 
