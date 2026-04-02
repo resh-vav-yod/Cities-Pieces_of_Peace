@@ -135,28 +135,34 @@ Cities-Pieces_of_Peace/        #root
   - 
 
 [UnityProject](#3) 
-- [文件目录](#文件目录)
-  - [总览](#总览)
-  - [目录 ](#目录-)
-  - [Docs ](#docs-)
-          - [*回到目录*](#回到目录)
-  - [ExternalData ](#externaldata-)
-          - [*回到目录*](#回到目录-1)
-  - [UnityProject ](#unityproject-)
-    - [Assets ](#assets-)
-      - [Art ](#art-)
-        - [Materials ](#materials-)
-      - [Code ](#code-)
-        - [Editor ](#editor-)
-        - [PlayerEditor ](#playereditor-)
-        - [Scripts ](#scripts-)
-          - [](#)
-        - [Shader ](#shader-)
-        - [Tests ](#tests-)
-    - [Packages ](#packages-)
-    - [ProjectSettings ](#projectsettings-)
-          - [*回到目录*](#回到目录-2)
-  - [](#-1)
+  - [Assets](#31)
+    - [Art](#311)
+      - [Materials](#3111) 
+      - [Models](#3112) 
+      - [Textures](#3113) 
+    - [Audio](#312)
+      - [Music](#3121) 
+      - [Sound](#3122) 
+    - [Code](#313)
+      - [Editor](#3131) 
+      - [PlayerEditor](#3132) 
+      - [Scripts](#3133) 
+        1. [Client](#31331) 
+        2. [Runtime](#31332) 
+        3. [Server](#31333) 
+        4. [Share](#31334) 
+      - [Shader](#3134) 
+      - [Tests](#3135) 
+    - [Data](#314)
+      - [Import](#3141) 
+    - [Level](#315)
+      - [Prefabs](#3151) 
+      - [Scenes](#3152) 
+      - [UI](#3153) 
+    - [Other](#316)
+
+  - [Packages](#32)
+  - [ProjectSettings](#33)
 
 ---
 ## Docs <a id="1"></a>
@@ -174,18 +180,24 @@ Cities-Pieces_of_Peace/        #root
 
 ### Assets <a id="31"></a>
 
-#### Art <a id="311"></a>
-##### Materials <a id="3111"></a>
+#### 1. Art <a id="311"></a>
+##### 1.1 Materials <a id="3111"></a>
 
-#### Code <a id="313"></a>
-##### Editor <a id="3131"></a>
-##### PlayerEditor <a id="3132"></a>
-##### Scripts <a id="3133"></a>
-###### 
-##### Shader <a id="3134"></a>
-##### Tests <a id="3135"></a>
+#### 3. Code <a id="313"></a>
+##### 3.1 Editor <a id="3131"></a>
+##### 3.2 PlayerEditor <a id="3132"></a>
+##### 3.3 Scripts <a id="3133"></a>
+###### 3.3.1 Client <a id="31331"></a>
+纯客户端，比如视角操控、渲染质量
+###### 3.3.2 Runtime <a id="31332"></a>
+玩家看到的，如单位。具体内容看game manager。
+###### 3.3.3 Server <a id="31333"></a>
+纯服务器，比如校准时间，以及未来双包的log等内容
+###### 3.3.4 Share <a id="31334"></a>
+##### 3.4 Shader <a id="3134"></a>
+##### 3.5 Tests <a id="3135"></a>
 
-### Packages <a id="P32"></a>
+### Packages <a id="32"></a>
 
 ### ProjectSettings <a id="33"></a>
 
