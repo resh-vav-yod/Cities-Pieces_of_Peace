@@ -51,7 +51,7 @@ public class SimpleUIManager : MonoBehaviour
         if (NetworkServer.active)
         {
             // 场景名必须和 Build Settings 里的地球场景名一模一样！
-            NetworkManager.singleton.ServerChangeScene("Earth"); 
+            NetworkManager.singleton.ServerChangeScene("Earth_v1.0"); 
         }
         else
         {

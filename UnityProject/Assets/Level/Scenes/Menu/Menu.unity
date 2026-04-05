@@ -4291,6 +4291,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NetworkManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5813473471729541650, guid: e41ea198418e64895ac7a7e0cce846ab, type: 3}
+      propertyPath: onlineScene
+      value: Assets/Level/Scenes/Earth/Earth_v1.0.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 5813473471729541650, guid: e41ea198418e64895ac7a7e0cce846ab, type: 3}
+      propertyPath: offlineScene
+      value: Assets/Level/Scenes/Menu/Menu.unity
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
