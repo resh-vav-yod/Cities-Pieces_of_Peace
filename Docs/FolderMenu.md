@@ -130,7 +130,7 @@ Cities-Pieces_of_Peace/        #root
   - [ArtBook](#11) 
   - [Design](#12) 
     - [GDD](#121) 
-    - [Tech](#122) 
+    - [TDD](#122) 
   - [Logs](#13) 
     - [DevLog](#131) 
     - [WorkLog](#132) 
