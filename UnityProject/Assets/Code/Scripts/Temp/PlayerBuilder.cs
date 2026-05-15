@@ -15,6 +15,8 @@ public class PlayerBuilder : NetworkBehaviour
 
     private GameObject currentPreview;
     private bool isBuildMode = false;
+    
+    public bool IsBuildMode => isBuildMode;
     private int currentGridX, currentGridY;
     private bool canPlaceCurrently;
 
