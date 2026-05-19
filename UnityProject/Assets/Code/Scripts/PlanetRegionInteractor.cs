@@ -1,17 +1,17 @@
 using UnityEngine;
-using UnityEngine.UI; // 必须引用 UI 命名空间
+using UnityEngine.UI;
 using TMPro;
-using Mirror;         // 用于场景跳转
+using Mirror;
 using UnityEngine.EventSystems;
 
 public class PlanetRegionInteractor : MonoBehaviour
 {
     [Header("UI 联动")]
-    public GameObject regionInfoPanel; // 拖入你的右侧弹窗面板
-    public TextMeshProUGUI nameText;             
-    public TextMeshProUGUI ownerText;            
+    public GameObject regionInfoPanel;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI ownerText;
     public TextMeshProUGUI resourceText;
-    
+
     [Header("核心引用")]
     public Camera mainCam;
     public Collider planetCollider;
@@ -21,8 +21,16 @@ public class PlanetRegionInteractor : MonoBehaviour
     [Header("高亮层")]
     public Renderer highlightOverlayRenderer;
 
+    [Header("战斗场景")]
+    public string battleSceneName = "test-battle";
+
     private Color32[] cachedPixels;
     private Material highlightMaterial;
+
+    private int selectedCellId = 0;
+    private string selectedRegionName = "";
+    private string selectedOwner = "";
+    private string selectedTerrain = "";
 
     private void Start()
     {
@@ -33,25 +41,26 @@ public class PlanetRegionInteractor : MonoBehaviour
 
         if (highlightOverlayRenderer != null)
         {
-            // material 会自动实例化一份材质，不会污染原始材质
             highlightMaterial = highlightOverlayRenderer.material;
+        }
+
+        if (database != null)
+        {
+            database.ApplyAllBattleResultsFromContext();
         }
     }
 
     private void Update()
     {
-        // 如果鼠标当前指在 UI 上 (比如按钮、面板)，直接退出，不再往后执行地球点击判定
-        if (EventSystem.current.IsPointerOverGameObject()) 
-        {
-            return; 
-        }
-        
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             TryPickRegion();
         }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             ClosePanel();
         }
@@ -61,10 +70,15 @@ public class PlanetRegionInteractor : MonoBehaviour
     {
         if (regionInfoPanel != null && regionInfoPanel.activeSelf)
         {
-            regionInfoPanel.SetActive(false); // 关闭面板
-            ClearHighlight();                // 清除地球上的高亮
+            regionInfoPanel.SetActive(false);
+            ClearHighlight();
             Debug.Log("通过 ESC 关闭了信息面板");
         }
+
+        selectedCellId = 0;
+        selectedRegionName = "";
+        selectedOwner = "";
+        selectedTerrain = "";
     }
 
     void TryPickRegion()
@@ -94,62 +108,66 @@ public class PlanetRegionInteractor : MonoBehaviour
 
         Debug.Log($"点击 UV: {uv}, cellId: {cellId}");
 
-        // ... 之前的采样和解码代码保持不变 ...
-
         if (cellId == 0)
         {
             ClearHighlight();
-            regionInfoPanel.SetActive(false); // 点到海洋时关闭面板
+
+            if (regionInfoPanel != null)
+                regionInfoPanel.SetActive(false);
+
+            selectedCellId = 0;
+            selectedRegionName = "";
+            selectedOwner = "";
+            selectedTerrain = "";
             return;
         }
 
         database.TryGetCell(cellId, out GeneratedCellInfo gen, out CellValueInfo val);
 
-        // 1. 确定名称
-        string nameResult = val != null && !string.IsNullOrEmpty(val.displayName)
-            ? val.displayName
-            : (gen != null ? gen.name : "Unknown Region");
+        string nameResult = database.GetDisplayName(cellId);
+        string ownerResult = database.GetOwner(cellId);
+        string terrainResult = database.GetTerrain(cellId);
+        string battleStatus = database.GetBattleStatus(cellId);
 
-        // 2. 确定归属
-        string ownerResult = val != null ? val.owner : "None";
+        float remainingLock = BattleContext.GetRemainingLockSeconds(cellId);
+        if (remainingLock > 0f)
+        {
+            battleStatus = $"Tower Rebuilding: {Mathf.CeilToInt(remainingLock)}s";
+        }
 
-        // 3. 联动 UI 显示 [新增逻辑]
+        selectedCellId = cellId;
+        selectedRegionName = nameResult;
+        selectedOwner = ownerResult;
+        selectedTerrain = terrainResult;
+
         if (regionInfoPanel != null)
         {
-            nameText.text = nameResult;
-            ownerText.text = "Owner: " + ownerResult;
-            
-            // 如果有详细资源数据，显示资源
-            if (val != null && val.resources != null)
+            if (nameText != null)
+                nameText.text = nameResult;
+
+            if (ownerText != null)
+                ownerText.text = $"Owner: {ownerResult}\nStatus: {battleStatus}";
+
+            if (resourceText != null)
             {
-                resourceText.text = $"food: {val.resources.food} | wood: {val.resources.wood} | iron: {val.resources.iron}";
+                if (val != null && val.resources != null)
+                {
+                    resourceText.text =
+                        $"food: {val.resources.food}\n" +
+                        $"wood: {val.resources.wood}\n" +
+                        $"iron: {val.resources.iron}\n" +
+                        $"terrain: {terrainResult}";
+                }
+                else
+                {
+                    resourceText.text = $"terrain: {terrainResult}";
+                }
             }
-            
-            regionInfoPanel.SetActive(true); // 激活面板
+
+            regionInfoPanel.SetActive(true);
         }
 
         ApplyHighlight(pickedColor);
-
-        /*
-        if (cellId == 0)
-        {
-            ClearHighlight();
-            Debug.Log("点到了空白区域或海洋。");
-            return;
-        }
-
-        database.TryGetCell(cellId, out GeneratedCellInfo gen, out CellValueInfo val);
-
-        string nameText = val != null && !string.IsNullOrEmpty(val.displayName)
-            ? val.displayName
-            : (gen != null ? gen.name : "未知地区");
-
-        string ownerText = val != null ? val.owner : "无主";
-
-        Debug.Log($"成功选中地区：ID={cellId}，名称={nameText}，归属={ownerText}");
-
-        ApplyHighlight(pickedColor);
-        */
     }
 
     void ApplyHighlight(Color32 pickedColor)
@@ -180,86 +198,40 @@ public class PlanetRegionInteractor : MonoBehaviour
 
     public void JumpToBattleScene()
     {
-        // 只有 Server/Host 才能发起场景切换
+        if (selectedCellId <= 0)
+        {
+            Debug.LogWarning("[PlanetRegionInteractor] 还没有选择有效地球区域，不能进入 Battle。");
+            return;
+        }
+
+        float remainingLock = BattleContext.GetRemainingLockSeconds(selectedCellId);
+
+        if (remainingLock > 0f)
+        {
+            string message = $"Radio tower is rebuilding.\nWait {Mathf.CeilToInt(remainingLock)}s.";
+
+            Debug.LogWarning($"[PlanetRegionInteractor] 当前区域暂时不能进入，还需等待 {remainingLock:F1} 秒。");
+
+            if (ownerText != null)
+                ownerText.text = $"Owner: {selectedOwner}\nStatus: {message}";
+
+            return;
+        }
+
+        BattleContext.PrepareBattleRegion(
+            selectedCellId,
+            selectedRegionName,
+            selectedOwner,
+            selectedTerrain
+        );
+
         if (NetworkServer.active)
         {
-            NetworkManager.singleton.ServerChangeScene("test-battle");
+            NetworkManager.singleton.ServerChangeScene(battleSceneName);
+        }
+        else
+        {
+            Debug.LogWarning("[PlanetRegionInteractor] 当前不是 Server/Host，不能切换到 Battle 场景。");
         }
     }
 }
-/*
- * 这个脚本负责处理玩家点击地球时的交互逻辑。
- * 核心思路是：通过射线检测获取点击位置的 UV 坐标，然后从 ID Map 贴图中读取对应像素的颜色值，解码出 Cell ID，最后查询数据库获取区域信息并显示。
- * 
- * 使用步骤：
- * 1. 将这个脚本挂载到一个空 GameObject 上，比如叫 "PlanetRegionInteractor"。
- * 2. 在 Inspector 中赋值 mainCam（主摄像机）、planetCollider（地球的 SphereCollider）、idMap（ID Map 贴图）和 database（区域数据库 ScriptableObject）。
- * 3. 确保地球模型有正确的 UV 展开，并且 ID Map 贴图的分辨率和 UV 对应关系正确。
-
-using UnityEngine;
-
-public class PlanetRegionInteractor : MonoBehaviour
-{
-    [Header("核心引用")]
-    public Camera mainCam;
-    public Collider planetCollider; // 必须是 SphereCollider
-    public Texture2D idMap;
-    public RegionRuntimeDatabase database;
-
-    private void Update()
-    {
-        // 鼠标左键点击
-        if (Input.GetMouseButtonDown(0))
-        {
-            TryPickRegion();
-        }
-    }
-
-    void TryPickRegion()
-    {
-        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
-
-        // 射线检测球体
-        if (!planetCollider.Raycast(ray, out RaycastHit hit, 100000f))
-            return;
-
-        // 核心：获取 UV 坐标并转为对应像素颜色
-        Vector2 uv = hit.textureCoord;
-        int cellId = SampleCellId(uv);
-
-        if (cellId == 0)
-        {
-            Debug.Log("💦 点到了无效区域或海洋！");
-            return;
-        }
-
-        // 去数据库查数据
-        database.TryGetCell(cellId, out GeneratedCellInfo gen, out CellValueInfo val);
-
-        string display = val?.displayName ?? gen?.name ?? "未知区域";
-        string owner = val?.owner ?? "无主之地";
-        
-        Debug.Log($"🎯 成功选中！Cell ID: {cellId} | 名称: {display} | 归属: {owner}");
-    }
-
-    int SampleCellId(Vector2 uv)
-    {
-        if (idMap == null) return 0;
-
-        // 将 UV 映射到贴图像素分辨率上
-        int x = Mathf.Clamp(Mathf.FloorToInt(uv.x * idMap.width), 0, idMap.width - 1);
-        int y = Mathf.Clamp(Mathf.FloorToInt(uv.y * idMap.height), 0, idMap.height - 1);
-
-        Color32 c = idMap.GetPixel(x, y);
-        return DecodeId(c);
-    }
-
-    // 将 RGB 像素还原为整数 ID (对应 Python 里的位运算)
-    int DecodeId(Color32 c)
-    {
-        return c.r | (c.g << 8) | (c.b << 16);
-    }
-
-    
-}
-*/

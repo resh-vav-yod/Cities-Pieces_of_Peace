@@ -9,6 +9,9 @@ UnityProject/[Bb]uilds/
 UnityProject/[Ll]ogs/
 UnityProject/[Uu]ser[Ss]ettings/
 
+/UnityProject_clone_*/
+**/UnityProject_clone_*/
+
 # 忽略 Unity 自动生成的临时文件
 UnityProject/MemoryCaptures/
 UnityProject/Recording/

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6630963865432090522}
   - component: {fileID: 5337467528839522412}
   - component: {fileID: -143389812725879005}
+  - component: {fileID: 4532341820835294298}
   m_Layer: 6
   m_Name: player
   m_TagString: Untagged
@@ -149,3 +150,26 @@ MonoBehaviour:
   previewMaterial: {fileID: 2100000, guid: 494918297c0c84ab9a892111e07ab8b4, type: 2}
   colorValid: {r: 0, g: 1, b: 0, a: 0.5}
   colorInvalid: {r: 1, g: 0, b: 0, a: 0.5}
+  myTeamColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &4532341820835294298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5137675176213224997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5059d5c07baa44c51959d83094a9532b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  playerBuilder: {fileID: -143389812725879005}
+  mainCamera: {fileID: 0}
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  rayDistance: 1000
+  formationSpacing: 1.2
