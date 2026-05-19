@@ -1,61 +1,104 @@
 using UnityEngine;
-using Mirror;
+using UnityEngine.EventSystems;
 
+/// <summary>
+/// Temp 战斗场景 UI 管理器。
+/// 负责建筑生产菜单显示/隐藏。
+/// 当前版本禁止中途主动退出 Battle。
+/// </summary>
 public class SimpleUIManager : MonoBehaviour
 {
     public static SimpleUIManager Instance;
 
-    public GameObject productionMenu; // 拖入你的 Panel
-    private BuildingControl currentSelectedBuilding; // 记录当前选中了哪个建筑
+    [Header("生产菜单")]
+    public GameObject productionMenu;
+
+    [Header("返回按钮")]
+    public GameObject returnToEarthButton;
+    public bool allowManualReturnToEarth = false;
+
+    private BuildingControl currentSelectedBuilding;
 
     private void Awake()
     {
         Instance = this;
+
+        if (productionMenu != null)
+            productionMenu.SetActive(false);
+
+        if (returnToEarthButton != null && !allowManualReturnToEarth)
+            returnToEarthButton.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
-        // 如果按下了 ESC 键，并且当前 UI 是打开的
-        if (Input.GetKeyDown(KeyCode.Escape) && productionMenu.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             CloseProductionMenu();
+            return;
         }
-    }
-    
-    public void CloseProductionMenu()
-    {
-        currentSelectedBuilding = null;
-        productionMenu.SetActive(false);
+
+        HandleClickOutsideProductionMenu();
     }
 
-    // 显示菜单并绑定建筑
     public void ShowProductionMenu(BuildingControl building)
     {
         currentSelectedBuilding = building;
-        productionMenu.SetActive(true);
+
+        if (productionMenu != null)
+            productionMenu.SetActive(true);
     }
 
-    // 绑定给 UI 按钮的 OnClick 事件
+    public void CloseProductionMenu()
+    {
+        currentSelectedBuilding = null;
+
+        if (productionMenu != null)
+            productionMenu.SetActive(false);
+    }
+
     public void ClickProduceButton()
     {
-        if (currentSelectedBuilding != null)
+        if (currentSelectedBuilding == null)
+            return;
+
+        currentSelectedBuilding.CmdProduceUnit();
+    }
+
+    private void HandleClickOutsideProductionMenu()
+    {
+        if (productionMenu == null || !productionMenu.activeSelf)
+            return;
+
+        if (!Input.GetMouseButtonDown(0))
+            return;
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return;
+
+        Camera cam = Camera.main;
+
+        if (cam == null)
         {
-            currentSelectedBuilding.CmdProduceUnit(); // 让当前选中的建筑去产兵
-            //productionMenu.SetActive(false);          // 产完关闭 UI (可选)
+            CloseProductionMenu();
+            return;
         }
+
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
+        {
+            BuildingControl clickedBuilding = hit.collider.GetComponentInParent<BuildingControl>();
+
+            if (clickedBuilding != null && clickedBuilding == currentSelectedBuilding)
+                return;
+        }
+
+        CloseProductionMenu();
     }
 
     public void ReturnToEarth()
     {
-        // 只有房主(服务器)有权限切换场景
-        if (NetworkServer.active)
-        {
-            // 场景名必须和 Build Settings 里的地球场景名一模一样！
-            NetworkManager.singleton.ServerChangeScene("Earth_v1.0"); 
-        }
-        else
-        {
-            Debug.Log("只有房主可以带大家返回地球！");
-        }
+        Debug.LogWarning("[SimpleUIManager] 当前版本不允许中途退出 Battle。请摧毁无线电塔或完成战斗结果。");
     }
 }

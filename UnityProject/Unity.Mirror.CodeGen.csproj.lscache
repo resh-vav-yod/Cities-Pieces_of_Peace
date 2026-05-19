@@ -317,9 +317,7 @@ Assets/Mirror/Plugins/Mono.Cecil/
  Mono.CecilX.dll
  Mono.CecilX.Rocks.dll
 Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll
-Temp/bin/Debug/
- Mirror.CompilerSymbols.dll
- Mirror.dll
+Temp/bin/Debug/Mirror.dll
 
 [analyzerReferences]
 ../../../../../../Applications/Unity/Hub/Editor/2022.3.62f3/Unity.app/Contents/Tools/Unity.SourceGenerators/

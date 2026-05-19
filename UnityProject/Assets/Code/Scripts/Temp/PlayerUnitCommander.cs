@@ -150,6 +150,21 @@ public class PlayerUnitCommander : NetworkBehaviour
             Vector3 offsetDestination = GetFormationPosition(destination, i, selectedUnits.Count);
             CmdMoveUnit(unit.netIdentity.netId, offsetDestination);
         }
+
+        BuildingControl targetBuilding = hit.collider.GetComponentInParent<BuildingControl>();
+
+        if (targetBuilding != null
+            && playerBuilder != null
+            && !UnitAI.IsSameTeam(targetBuilding.teamColor, playerBuilder.myTeamColor))
+        {
+            foreach (UnitAI unit in selectedUnits)
+            {
+                if (unit != null && unit.netIdentity != null && targetBuilding.netIdentity != null)
+                    CmdAttackBuilding(unit.netIdentity.netId, targetBuilding.netIdentity.netId);
+            }
+
+            return;
+        }
     }
 
     private void TrySelectSingleUnit(bool additive)
@@ -269,6 +284,33 @@ public class PlayerUnitCommander : NetworkBehaviour
             return;
 
         unit.ServerSetAttackRadioTowerOrder(tower);
+    }
+
+    /// <summary>
+    /// 客户端请求：命令自己的单位攻击敌方建筑。
+    /// 真正校验和扣血都在服务器做。
+    /// </summary>
+    [Command]
+    private void CmdAttackBuilding(uint unitNetId, uint buildingNetId)
+    {
+        if (!BattleCommandAuthority.ManualControlEnabled)
+            return;
+
+        if (!TryGetOwnedUnitOnServer(unitNetId, out UnitAI unit))
+            return;
+
+        if (!NetworkServer.spawned.TryGetValue(buildingNetId, out NetworkIdentity buildingIdentity))
+            return;
+
+        BuildingControl building = buildingIdentity.GetComponent<BuildingControl>();
+
+        if (building == null)
+            return;
+
+        if (UnitAI.IsSameTeam(building.teamColor, playerBuilder.myTeamColor))
+            return;
+
+        unit.ServerSetAttackBuildingOrder(building);
     }
 
     [Server]

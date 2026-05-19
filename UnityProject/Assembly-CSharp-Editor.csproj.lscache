@@ -377,7 +377,6 @@ Temp/bin/Debug/
  Mirror.Transports.dll
  SimpleWebTransport.dll
  Telepathy.dll
- Unity.Mirror.CodeGen.dll
 
 [analyzerReferences]
 ../../../../../../Applications/Unity/Hub/Editor/2022.3.62f3/Unity.app/Contents/Tools/Unity.SourceGenerators/

@@ -302,13 +302,7 @@ Library/ScriptAssemblies/
  UnityEditor.UI.dll
  UnityEngine.TestRunner.dll
  UnityEngine.UI.dll
-Temp/bin/Debug/
- kcp2k.dll
- Mirror.CompilerSymbols.dll
- Mirror.dll
- Mirror.Transports.dll
- SimpleWebTransport.dll
- Telepathy.dll
+Temp/bin/Debug/Mirror.Transports.dll
 
 [analyzerReferences]
 ../../../../../../Applications/Unity/Hub/Editor/2022.3.62f3/Unity.app/Contents/Tools/Unity.SourceGenerators/

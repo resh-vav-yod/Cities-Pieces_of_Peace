@@ -51,8 +51,8 @@ MonoBehaviour:
   headlessStartMode: 0
   editorAutoStart: 0
   sendRate: 60
-  offlineScene: Assets/Scenes/Menu.unity
-  onlineScene: Assets/Scenes/Earth.unity
+  offlineScene: 
+  onlineScene: 
   offlineSceneLoadDelay: 0
   transport: {fileID: 2727859461264761633}
   networkAddress: localhost
@@ -66,6 +66,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 4797607691382245063, guid: 197a53bd70db748e4969a2b210970e7c, type: 3}
   - {fileID: 8710624109513127682, guid: 1c468fae95c7142f882e6b94d4c54f6b, type: 3}
+  - {fileID: 4909115142730615879, guid: caf6707980752429981f2a134b01a294, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2

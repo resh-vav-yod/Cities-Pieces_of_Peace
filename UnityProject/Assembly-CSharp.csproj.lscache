@@ -65,7 +65,11 @@ Assets/Code/Scripts/
  Temp/
   BattleCameraController.cs
   BattleCommandAuthority.cs
+  BattleContext.cs
   BattleCountdownUI.cs
+  BattleEconomyUI.cs
+  BattleRadioTowerSpawnManager.cs
+  BattleSignalUtility.cs
   BuildingControl.cs
   error/
    CommandableUnit.cs
@@ -73,10 +77,14 @@ Assets/Code/Scripts/
    PlayerUnitSelectionController.cs
   GridManager.cs
   NetworkedRadioTower.cs
+  NetworkHealth.cs
+  NetworkVisionSource.cs
+  NetworkVisionUtility.cs
   PlayerBuilder.cs
   PlayerUnitCommander.cs
   UIManager.cs
   UnitAI.cs
+  WorldHealthBar.cs
 Assets/TextMesh Pro/Examples & Extras/Scripts/
  Benchmark01.cs
  Benchmark01_UGUI.cs
@@ -413,7 +421,6 @@ Temp/bin/Debug/
  Mirror.Transports.dll
  SimpleWebTransport.dll
  Telepathy.dll
- Unity.Mirror.CodeGen.dll
 
 [analyzerReferences]
 ../../../../../../Applications/Unity/Hub/Editor/2022.3.62f3/Unity.app/Contents/Tools/Unity.SourceGenerators/

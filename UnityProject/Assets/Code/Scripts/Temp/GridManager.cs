@@ -9,115 +9,115 @@ public class GridManager : NetworkBehaviour
     public int width = 100;
     public int height = 100;
     public float cellSize = 1f;
-    
-    // 网格的左下角起点（对应 100x100 的平面，中心在 0,0）
-    private Vector3 originPosition = new Vector3(-50f, 0, -50f); 
-    
-    // 逻辑数组，true 表示已占用，false 表示空闲
-    private bool[,] gridArray;
+
+    [Header("建筑设置")]
     public int buildingWidth = 5;
     public int buildingHeight = 5;
+
+    [Tooltip("建筑生成高度。普通 Cube 以中心为轴时建议 0.5；如果你的建筑 pivot 在底部，就设 0。")]
+    public float buildingPlacementY = 0.5f;
+
+    // 网格左下角起点。100x100 平面中心在 0,0 时，左下角就是 (-50, -50)。
+    private Vector3 originPosition = new Vector3(-50f, 0f, -50f);
+
+    // true = 已占用；false = 空闲
+    private bool[,] gridArray;
+
     private void Awake()
     {
         Instance = this;
         gridArray = new bool[width, height];
     }
 
-    // 核心工具 1：将世界坐标转换为网格索引 (x, y)
+    /// <summary>
+    /// 世界坐标转换为网格索引。
+    /// </summary>
     public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt((worldPosition.x - originPosition.x) / cellSize);
         y = Mathf.FloorToInt((worldPosition.z - originPosition.z) / cellSize);
     }
 
-    // 核心工具 2：将网格索引转换回世界坐标（取格子中心点）
+    /// <summary>
+    /// 网格索引转换为世界坐标。
+    /// 注意：这里不再使用 y=2.5，否则建筑会飞起来。
+    /// </summary>
     public Vector3 GetWorldPosition(int x, int y)
     {
-        return new Vector3(x, 2.5f, y) * cellSize + originPosition + new Vector3(cellSize / 2, 0, cellSize / 2);
+        return new Vector3(
+            x * cellSize + originPosition.x + cellSize / 2f,
+            buildingPlacementY,
+            y * cellSize + originPosition.z + cellSize / 2f
+        );
     }
 
-    // 检查索引是否越界
     public bool IsValidIndex(int x, int y)
     {
         return x >= 0 && y >= 0 && x < width && y < height;
     }
 
-    // 检查是否可以放置（未越界且未被占用）
-    /*
-    public bool CanPlaceBuilding(int x, int y)
-    {
-        if (!IsValidIndex(x, y)) return false;
-        return !gridArray[x, y];
-    }
-    */
+    /// <summary>
+    /// 检查 5x5 建筑范围是否可以放置。
+    /// </summary>
     public bool CanPlaceBuilding(int startX, int startY)
     {
-        // 检查这 5x5 的区域内，是不是每个格子都在地图内且为空闲
         for (int x = startX; x < startX + buildingWidth; x++)
         {
             for (int y = startY; y < startY + buildingHeight; y++)
             {
-                if (!IsValidIndex(x, y) || gridArray[x, y]) 
-                {
-                    return false; // 只要有一个格子越界或被占，整个建筑都不能放
-                }
+                if (!IsValidIndex(x, y) || gridArray[x, y])
+                    return false;
             }
         }
+
         return true;
     }
 
-    // --- 网络同步部分 ---
-
-    // 服务器调用：标记格子被占用
-    /*
-    [Server]
-    public void ServerPlaceBuilding(int x, int y)
-    {
-        if (IsValidIndex(x, y))
-        {
-            gridArray[x, y] = true;
-            RpcUpdateGrid(x, y); // 通知所有客户端更新他们的本地数组
-        }
-    }
-
-    // 客户端接收：更新本地网格状态
-    [ClientRpc]
-    private void RpcUpdateGrid(int x, int y)
-    {
-        if (IsValidIndex(x, y))
-        {
-            gridArray[x, y] = true;
-        }
-    }
-    */
-
+    /// <summary>
+    /// 服务器：占用建筑格子。
+    /// </summary>
     [Server]
     public void ServerPlaceBuilding(int startX, int startY)
     {
-        if (CanPlaceBuilding(startX, startY))
-        {
-            // 放置成功，把这 5x5 的区域全部标记为占用
-            for (int x = startX; x < startX + buildingWidth; x++)
-            {
-                for (int y = startY; y < startY + buildingHeight; y++)
-                {
-                    gridArray[x, y] = true;
-                }
-            }
-            RpcUpdateGrid(startX, startY);
-        }
+        if (!CanPlaceBuilding(startX, startY))
+            return;
+
+        SetBuildingArea(startX, startY, true);
+        RpcSetBuildingArea(startX, startY, true);
     }
 
-    [ClientRpc]
-    private void RpcUpdateGrid(int startX, int startY)
+    /// <summary>
+    /// 服务器：释放建筑格子。
+    /// 建筑被摧毁时调用。
+    /// </summary>
+    [Server]
+    public void ServerRemoveBuilding(int startX, int startY)
     {
-        // 客户端同步锁定这片区域
+        SetBuildingArea(startX, startY, false);
+        RpcSetBuildingArea(startX, startY, false);
+    }
+
+    /// <summary>
+    /// 服务器/客户端共用：设置一片 5x5 区域是否占用。
+    /// </summary>
+    private void SetBuildingArea(int startX, int startY, bool occupied)
+    {
         for (int x = startX; x < startX + buildingWidth; x++)
         {
             for (int y = startY; y < startY + buildingHeight; y++)
             {
-                gridArray[x, y] = true;
+                if (IsValidIndex(x, y))
+                    gridArray[x, y] = occupied;
             }
         }
+    }
+
+    /// <summary>
+    /// 客户端同步格子占用/释放。
+    /// </summary>
+    [ClientRpc]
+    private void RpcSetBuildingArea(int startX, int startY, bool occupied)
+    {
+        SetBuildingArea(startX, startY, occupied);
     }
 }

@@ -1,165 +1,273 @@
+using System.Collections;
 using UnityEngine;
 using Mirror;
 
+/// <summary>
+/// 玩家建造控制。
+/// 负责本地建造预览、服务器生成建筑、玩家经济。
+/// 当前版本：建造建筑也会受到无线电塔低血量造成的输入延迟影响。
+/// </summary>
 public class PlayerBuilder : NetworkBehaviour
 {
     [Header("配置")]
-    public LayerMask groundLayer;          // 选你刚才创建的 Ground Layer
-    public GameObject previewPrefab;       // 拖入刚才做的 BuildingPreview 预制体
-    public GameObject actualBuildingPrefab;// 拖入真正要生成的建筑预制体 (稍后做)
-    
+    public LayerMask groundLayer;
+    public GameObject previewPrefab;
+    public GameObject actualBuildingPrefab;
+
     [Header("材质颜色")]
-    public Material previewMaterial;       // 关联预览预制体的材质
-    public Color colorValid = new Color(0, 1, 0, 0.5f);   // 绿色半透明
-    public Color colorInvalid = new Color(1, 0, 0, 0.5f); // 红色半透明
+    public Material previewMaterial;
+    public Color colorValid = new Color(0f, 1f, 0f, 0.5f);
+    public Color colorInvalid = new Color(1f, 0f, 0f, 0.5f);
+
+    [Header("经济")]
+    public int startingCredits = 500;
+    public int buildingCost = 100;
+
+    [SyncVar]
+    public int credits;
+
+    [Header("通信延迟")]
+    public float damagedTowerDelayThreshold = 0.5f;
+    public float delayedCommandSeconds = 3f;
 
     private GameObject currentPreview;
     private bool isBuildMode = false;
-    
-    public bool IsBuildMode => isBuildMode;
-    private int currentGridX, currentGridY;
+    private int currentGridX;
+    private int currentGridY;
     private bool canPlaceCurrently;
+    private bool pendingBuildCommand = false;
 
-    [SyncVar] public Color myTeamColor;
+    public bool IsBuildMode => isBuildMode;
+
+    [SyncVar]
+    public Color myTeamColor;
+
+    public static PlayerBuilder LocalPlayer { get; private set; }
+
     private static int colorIndex = 0;
-    private static Color[] teamColors = { Color.blue, Color.red, Color.yellow, Color.green };
+    private static readonly Color[] teamColors =
+    {
+        Color.blue,
+        Color.red,
+        Color.yellow,
+        Color.green
+    };
 
     public override void OnStartServer()
     {
-        myTeamColor = teamColors[colorIndex % teamColors.Length];
-        colorIndex++;
+        if (myTeamColor.a <= 0.01f)
+        {
+            myTeamColor = teamColors[colorIndex % teamColors.Length];
+            colorIndex++;
+        }
+
+        // 服务器初始化玩家资金。
+        // 如果你发现 UI 一直是 0，优先检查 startingCredits 是否在 Inspector 里被设成 0。
+        if (credits <= 0)
+            credits = startingCredits;
     }
 
-    void Update()
+    public override void OnStartLocalPlayer()
     {
-        if (!isLocalPlayer) return; // 只控制本地玩家的操作
+        base.OnStartLocalPlayer();
+        LocalPlayer = this;
+    }
 
-        if (Camera.main == null || GridManager.Instance == null) return;
+    private void OnDestroy()
+    {
+        if (LocalPlayer == this)
+            LocalPlayer = null;
+    }
 
-        // 按 B 键开关建造模式 (你可以后续改成 UI 按钮触发)
+    private void Update()
+    {
+        if (!isLocalPlayer)
+            return;
+
+        if (Camera.main == null || GridManager.Instance == null)
+            return;
+
         if (Input.GetKeyDown(KeyCode.B))
         {
-            //Debug.Log("检测到按下 B 键！当前 isBuildMode: " + !isBuildMode);
             ToggleBuildMode(!isBuildMode);
         }
 
         if (isBuildMode)
         {
-            //if (Camera.main == null) { Debug.LogWarning("找不到主摄像机！"); return; }
-            //if (GridManager.Instance == null) { Debug.LogWarning("找不到 GridManager 实例！"); return; }
             HandlePreview();
             HandleClickToBuild();
         }
     }
-    /*
-    void Update()
-    {
-        // 1. 权限检查
-        if (!isLocalPlayer) return;
 
-        // 2. 基础引用检查（如果这里报错，说明相机没标签，或者网格管理器没挂好）
-        if (Camera.main == null) 
-        {
-            Debug.LogError("🚨 严重错误：找不到主摄像机！请选中战斗场景的相机，把 Inspector 顶部的 Tag 改为 MainCamera。");
-            return;
-        }
-        if (GridManager.Instance == null) 
-        {
-            Debug.LogError("🚨 严重错误：GridManager 实例为空！请确认战斗场景中有 GridManager 物体，且挂载了脚本。");
-            return;
-        }
-
-        // 3. 按键检测
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Debug.Log("✅ 成功检测到按下 B 键！切换建造模式状态。");
-            ToggleBuildMode(!isBuildMode);
-        }
-
-        // 4. 射线检测排错
-        if (isBuildMode)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            
-            // 我们画出这条射线，你在 Scene 窗口（不是 Game 窗口）里能看到一条红线
-            Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundLayer))
-            {
-                HandlePreview();
-                HandleClickToBuild();
-            }
-            else
-            {
-                // 如果你按了 B，控制台疯狂刷这条警告，说明射线穿透了地面！
-                Debug.LogWarning("⚠️ 警告：建造模式已开启，但射线击穿了地面！请检查地面的 Layer 是否为 Ground，以及地面是否有 Collider。");
-            }
-        }
-    }
-    */
-    void ToggleBuildMode(bool state)
+    private void ToggleBuildMode(bool state)
     {
         isBuildMode = state;
+
         if (isBuildMode)
         {
-            if (currentPreview == null) currentPreview = Instantiate(previewPrefab);
+            if (currentPreview == null)
+                currentPreview = Instantiate(previewPrefab);
+
             currentPreview.SetActive(true);
         }
         else
         {
-            if (currentPreview != null) currentPreview.SetActive(false);
+            if (currentPreview != null)
+                currentPreview.SetActive(false);
         }
     }
 
-
-    void HandlePreview()
+    private void HandlePreview()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundLayer))
-        {
-            // 1. 获取鼠标所在的格子索引
-            GridManager.Instance.GetXY(hit.point, out currentGridX, out currentGridY);
-            
-            // 2. 吸附到格子中心
-            currentPreview.transform.position = GridManager.Instance.GetWorldPosition(currentGridX, currentGridY);
-            
-            // 3. 检查是否可建造并变色
-            canPlaceCurrently = GridManager.Instance.CanPlaceBuilding(currentGridX, currentGridY);
+
+        if (!Physics.Raycast(ray, out RaycastHit hit, 1000f, groundLayer))
+            return;
+
+        GridManager.Instance.GetXY(hit.point, out currentGridX, out currentGridY);
+
+        Vector3 previewPos = GridManager.Instance.GetWorldPosition(currentGridX, currentGridY);
+        currentPreview.transform.position = previewPos;
+
+        bool gridValid = GridManager.Instance.CanPlaceBuilding(currentGridX, currentGridY);
+        bool visionValid = NetworkVisionUtility.IsPointVisibleToTeam(previewPos, myTeamColor, true);
+        bool moneyValid = credits >= buildingCost;
+        bool noPending = !pendingBuildCommand;
+
+        canPlaceCurrently = gridValid && visionValid && moneyValid && noPending;
+
+        if (previewMaterial != null)
             previewMaterial.color = canPlaceCurrently ? colorValid : colorInvalid;
-        }
     }
 
-    void HandleClickToBuild()
+    private void HandleClickToBuild()
     {
-        // 鼠标左键点击，且当前位置合法
         if (Input.GetMouseButtonDown(0) && canPlaceCurrently)
         {
-            // 发送命令给服务器：我要在这里建东西！
             CmdPlaceBuilding(currentGridX, currentGridY);
-            
-            // 建造后可选退出建造模式
-            // ToggleBuildMode(false); 
         }
     }
 
-    // --- 网络命令 ---
+    /// <summary>
+    /// 客户端请求建造。
+    /// 服务器收到后，如果通信塔低血量，则延迟 3 秒再真正执行。
+    /// </summary>
     [Command]
-    void CmdPlaceBuilding(int x, int y)
+    private void CmdPlaceBuilding(int x, int y)
     {
-        // 服务器做最后的二次验证，防止作弊或延迟冲突
-        if (GridManager.Instance.CanPlaceBuilding(x, y))
+        if (pendingBuildCommand)
+            return;
+
+        float delay = BattleSignalUtility.GetManualCommandDelayForTeam(
+            myTeamColor,
+            damagedTowerDelayThreshold,
+            delayedCommandSeconds
+        );
+
+        if (delay > 0f)
         {
-            // 1. 标记网格占用 (同步给所有人)
-            GridManager.Instance.ServerPlaceBuilding(x, y);
-
-            // 2. 生成真正的建筑
-            Vector3 spawnPos = GridManager.Instance.GetWorldPosition(x, y);
-            GameObject newBuilding = Instantiate(actualBuildingPrefab, spawnPos, Quaternion.identity);
-            
-            // 把生成建筑的控制权(Authority)赋给点击建造的玩家客户端！
-            NetworkServer.Spawn(newBuilding, connectionToClient);
-
-            newBuilding.GetComponent<BuildingControl>().teamColor = this.myTeamColor;
+            pendingBuildCommand = true;
+            StartCoroutine(ServerDelayedPlaceBuilding(x, y, delay));
+            Debug.Log($"[PlayerBuilder] 通信塔受损，建造命令延迟 {delay} 秒执行。");
+            return;
         }
+
+        ServerTryPlaceBuilding(x, y);
+    }
+
+    [Server]
+    private IEnumerator ServerDelayedPlaceBuilding(int x, int y, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        ServerTryPlaceBuilding(x, y);
+        pendingBuildCommand = false;
+    }
+
+    /// <summary>
+    /// 服务器实际建造逻辑。
+    /// 延迟结束后也会重新验证钱、视野、格子，避免延迟期间状态变化造成问题。
+    /// </summary>
+    [Server]
+    private void ServerTryPlaceBuilding(int x, int y)
+    {
+        if (GridManager.Instance == null)
+            return;
+
+        if (actualBuildingPrefab == null)
+        {
+            Debug.LogError("[PlayerBuilder] actualBuildingPrefab 未设置。");
+            return;
+        }
+
+        Vector3 spawnPos = GridManager.Instance.GetWorldPosition(x, y);
+
+        if (!NetworkVisionUtility.IsPointVisibleToTeam(spawnPos, myTeamColor, true))
+        {
+            Debug.Log("[PlayerBuilder] 建造失败：目标格子不在友方视野范围内。");
+            return;
+        }
+
+        if (!GridManager.Instance.CanPlaceBuilding(x, y))
+        {
+            Debug.Log("[PlayerBuilder] 建造失败：目标格子已被占用或越界。");
+            return;
+        }
+
+        if (!ServerTrySpendCredits(buildingCost))
+        {
+            Debug.Log("[PlayerBuilder] 建造失败：资金不足。");
+            return;
+        }
+
+        GridManager.Instance.ServerPlaceBuilding(x, y);
+
+        GameObject newBuilding = Instantiate(actualBuildingPrefab, spawnPos, Quaternion.identity);
+
+        BuildingControl buildingControl = newBuilding.GetComponent<BuildingControl>();
+        if (buildingControl != null)
+        {
+            buildingControl.teamColor = myTeamColor;
+            buildingControl.gridX = x;
+            buildingControl.gridY = y;
+            buildingControl.hasGridPosition = true;
+        }
+
+        NetworkVisionSource vision = newBuilding.GetComponent<NetworkVisionSource>();
+        if (vision != null)
+        {
+            vision.teamColor = myTeamColor;
+        }
+
+        NetworkServer.Spawn(newBuilding, connectionToClient);
+
+        if (buildingControl != null)
+            buildingControl.ServerInitBuilding(myTeamColor, x, y);
+
+        if (vision != null)
+            vision.ServerSetTeam(myTeamColor);
+    }
+
+    [Server]
+    public bool ServerTrySpendCredits(int amount)
+    {
+        if (amount <= 0)
+            return true;
+
+        if (credits < amount)
+            return false;
+
+        credits -= amount;
+        return true;
+    }
+
+    [Server]
+    public void ServerAddCredits(int amount)
+    {
+        if (amount <= 0)
+            return;
+
+        credits += amount;
+        Debug.Log($"[PlayerBuilder] 获得资金：+{amount}，当前资金={credits}");
     }
 }
