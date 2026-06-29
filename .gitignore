@@ -29,6 +29,9 @@ UnityProject/*.pdb
 UnityProject/*.mdb
 UnityProject/*.opendb
 UnityProject/*.VC.db
+UnityProject/*.csproj.lscache
+UnityProject/*.csproj
+UnityProject/*.sln
 
 # ====================================================================
 # 外部工具与 IDE 忽略
@@ -38,6 +41,7 @@ UnityProject/*.VC.db
 *.vsconfig
 bin/
 obj/
+.agents/
 
 # ====================================================================
 # 系统垃圾文件
